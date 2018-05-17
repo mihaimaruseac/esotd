@@ -1,4 +1,9 @@
--- | Example of a library file. It is also used for testing the test suites.
+{-|
+Module      : ExponentialSum
+Description : Compute the exponential sum of the day
+
+Compute the exponential sum of the day, to be plotted later.
+ -}
 
 module ExponentialSum where
 
