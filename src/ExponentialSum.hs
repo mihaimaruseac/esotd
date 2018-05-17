@@ -1,9 +1,6 @@
 -- | Example of a library file. It is also used for testing the test suites.
-module ExponentialSum
-  (
-    -- * Exported functions
-    term
-  ) where
+
+module ExponentialSum where
 
 -- | Compute the value of the nth term, given the initial coefficients
 --
