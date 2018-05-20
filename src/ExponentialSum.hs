@@ -41,7 +41,7 @@ realArg xs n = sum $ zipWith power xs [1..]
     power x i = n ^ i / x
 
 -- | Computes the value of the complex exponential for a term at an index
+-- Since we need to multiply the result of `realArg` with i, we just put it in
+-- the imaginary part of the newly minted complex number.
 expVal :: [Double] -> Double -> Complex Double
-expVal xs n = exp $ 2 * pi * i * (realArg xs n :+ 0)
-  where
-    i = 0 :+ 1
+expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
