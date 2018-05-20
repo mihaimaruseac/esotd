@@ -7,6 +7,8 @@ Compute the exponential sum of the day, to be plotted later.
 
 module ExponentialSum where
 
+import Data.Complex
+
 -- | Compute the value of the real argument of the exponential, at point n,
 -- given the initial coefficients.
 --
@@ -37,3 +39,9 @@ realArg xs n = sum $ zipWith power xs [1..]
   where
     power :: Double -> Int -> Double
     power x i = n ^ i / x
+
+-- | Computes the value of the complex exponential for a term at an index
+expVal :: [Double] -> Double -> Complex Double
+expVal xs n = exp $ 2 * pi * i * (realArg xs n :+ 0)
+  where
+    i = 0 :+ 1
