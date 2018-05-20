@@ -43,5 +43,12 @@ realArg xs n = sum $ zipWith power xs [1..]
 -- | Computes the value of the complex exponential for a term at an index
 -- Since we need to multiply the result of `realArg` with i, we just put it in
 -- the imaginary part of the newly minted complex number.
+--
+-- Continuing from the examples above:
+--
+-- >>> expVal [12, 5, 2018] 3
+-- (-0.9510565162951544) :+ (-0.3090169943749449)
+-- >>> expVal [12, 5, 18] 3
+-- 0.9217505006686714 :+ 0.3877834634393964
 expVal :: [Double] -> Double -> Complex Double
 expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
