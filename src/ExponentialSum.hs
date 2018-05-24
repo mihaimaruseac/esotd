@@ -57,3 +57,7 @@ realArg xs n = sum $ zipWith power xs [1..]
 -- prop> expVal xs 0 == 0
 expVal :: [Double] -> Double -> Complex Double
 expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
+
+-- | Computes the partial sums of the exponential sum of the day
+expSums :: [Double] -> [Complex Double]
+expSums xs = scanl1 (+) $ map (expVal xs) [0..]
