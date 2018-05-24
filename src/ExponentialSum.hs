@@ -5,7 +5,7 @@ Description : Compute the exponential sum of the day
 Compute the exponential sum of the day, to be plotted later.
  -}
 
-module ExponentialSum where
+module ExponentialSum  (expSums) where
 
 import Data.Complex
 
