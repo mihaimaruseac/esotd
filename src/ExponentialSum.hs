@@ -59,5 +59,13 @@ expVal :: [Double] -> Double -> Complex Double
 expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
 
 -- | Computes the partial sums of the exponential sum of the day
+--
+-- From the above examples and properties
+-- >>> take 3 $ expSums [12, 5, 18]
+-- [1.0 :+ 0.0,0.4700807357667952 :+ 0.8480480961564261,(-0.3779673603896302) :+ 1.3779673603896319]
+-- >>> take 3 $ expSums [12, 5, 2018]
+-- [1.0 :+ 0.0,0.7890437903507289 :+ 0.9774955128339019,1.7720662136902803 :+ 0.794010049617778]
+-- >>> take 3 $ expSums []
+-- [1.0 :+ 0.0,2.0 :+ 0.0,3.0 :+ 0.0]
 expSums :: [Double] -> [Complex Double]
 expSums xs = scanl1 (+) $ map (expVal xs) [0..]
