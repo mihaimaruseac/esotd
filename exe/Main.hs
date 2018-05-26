@@ -1,4 +1,4 @@
-import Lib (inc)
+import ExponentialSum (expSums)
 
 main :: IO ()
-main = print . inc $ (41 :: Int)
+main = print $ take 10 $ expSums [1,2,3]
