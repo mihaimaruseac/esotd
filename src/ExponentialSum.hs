@@ -5,7 +5,14 @@ Description : Compute the exponential sum of the day
 Compute the exponential sum of the day, to be plotted later.
  -}
 
-module ExponentialSum  (expSums) where
+module ExponentialSum
+  (
+    -- * Main function
+    expSums
+    -- * Exported for convenience
+  , expVal
+  , realArg
+  ) where
 
 import Data.Complex
 
@@ -24,12 +31,12 @@ import Data.Complex
 --
 -- 1. If the coefficients are missing, we want to return a 0 for any index:
 --
--- prop> realArg [] x == 0
+--     prop> realArg [] x == 0
 --
 -- 2. If the index is 0, we output 0 regardless of the coefficients, provided
 -- at least one is non-zero
 --
--- prop> a == 0 || realArg (a:xs) 0 == 0
+--     prop> a == 0 || realArg (a:xs) 0 == 0
 --
 -- There might be a few more properties but we can ignore them for now, as
 -- some might fail due to numerical inaccuracies. We are also sidestepping
@@ -44,14 +51,14 @@ realArg xs n = sum $ zipWith power xs [1..]
 -- Since we need to multiply the result of `realArg` with i, we just put it in
 -- the imaginary part of the newly minted complex number.
 --
--- Continuing from the examples above:
+-- Examples:
 --
 -- >>> expVal [12, 5, 2018] 3
 -- (-0.9510565162951544) :+ (-0.3090169943749449)
 -- >>> expVal [12, 5, 18] 3
 -- 0.9217505006686714 :+ 0.3877834634393964
 --
--- Also, we have the following properties, from the above:
+-- Also, we have the following properties:
 --
 -- prop> expVal [] x == 0
 -- prop> expVal xs 0 == 0
@@ -60,7 +67,6 @@ expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
 
 -- | Computes the partial sums of the exponential sum of the day
 --
--- From the above examples and properties
 -- >>> take 3 $ expSums [12, 5, 18]
 -- [1.0 :+ 0.0,0.4700807357667952 :+ 0.8480480961564261,(-0.3779673603896302) :+ 1.3779673603896319]
 -- >>> take 3 $ expSums [12, 5, 2018]
