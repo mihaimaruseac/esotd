@@ -54,14 +54,14 @@ realArg xs n = sum $ zipWith power xs [1..]
 -- Examples:
 --
 -- >>> expVal [12, 5, 2018] 3
--- (-0.9510565162951544) :+ (-0.3090169943749449)
--- >>> expVal [12, 5, 18] 3
 -- 0.9217505006686714 :+ 0.3877834634393964
+-- >>> expVal [12, 5, 18] 3
+-- (-0.9510565162951544) :+ (-0.3090169943749449)
 --
 -- Also, we have the following properties:
 --
--- prop> expVal [] x == 0
--- prop> expVal xs 0 == 0
+-- prop> x == 0 || expVal [] x == 1
+-- prop> a >= 0 || expVal (a:xs) 0 == 1
 expVal :: [Double] -> Double -> Complex Double
 expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
 
