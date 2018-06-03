@@ -7,5 +7,5 @@ Functions and utilities to parse the arguments from the command line.
 
 module Args (parseArgs) where
 
-parseArgs :: a
+parseArgs :: Int -- TODO
 parseArgs = undefined
