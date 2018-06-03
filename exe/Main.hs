@@ -1,8 +1,9 @@
-import Args (parseArgs)
+{-# LANGUAGE RecordWildCards #-}
+
+import Args (parseArgs, Args(..))
 import ExponentialSum (expSums)
 
 main :: IO ()
 main = do
-  args <- parseArgs
-  print $ args
-  print $ take 10 $ expSums [1,2,3]
+  Args{..} <- parseArgs
+  print $ take (end - start) $ drop start $ expSums $ map fromIntegral coeffs
