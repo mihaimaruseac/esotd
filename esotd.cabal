@@ -35,8 +35,10 @@ executable esotd
   ghc-options:       -Wall -Werror -O2 -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:    exe
   main-is:           Main.hs
+  other-modules:     Args
   build-depends:     base >= 4.8 && < 5
                    , esotd
+                   , optparse-applicative
 
 test-suite doctest
   type:              exitcode-stdio-1.0
@@ -49,4 +51,3 @@ test-suite doctest
                    , QuickCheck
                    , doctest
                    , esotd
-                   , optparse-applicative
