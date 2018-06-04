@@ -36,6 +36,7 @@ executable esotd
   hs-source-dirs:    exe
   main-is:           Main.hs
   other-modules:     Args
+                   , Plot
   build-depends:     base >= 4.8 && < 5
                    , esotd
                    , optparse-applicative
