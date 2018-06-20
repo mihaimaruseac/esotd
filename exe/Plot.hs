@@ -7,5 +7,8 @@ Plots the result of the exponential sum of the day.
 
 module Plot (display) where
 
-display :: [(Double, Double)] -> IO ()
-display = undefined
+import Diagrams.Backend.Rasterific
+import Diagrams
+
+display :: [(Double, Double)] -> Diagram B
+display _ = circle 1

@@ -38,6 +38,8 @@ executable esotd
   other-modules:     Args
                    , Plot
   build-depends:     base >= 4.8 && < 5
+                   , diagrams-lib
+                   , diagrams-rasterific
                    , esotd
                    , optparse-applicative
 

@@ -1,3 +1,9 @@
 resolver: lts-11.14
 packages:
-- .
+  - .
+extra-deps:
+  - diagrams-core-1.4.1.1
+  - diagrams-lib-1.4.2.3
+  - diagrams-rasterific-1.4.1
+  - diagrams-solve-0.1.1
+  - dual-tree-0.2.2
