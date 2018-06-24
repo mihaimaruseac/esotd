@@ -11,4 +11,4 @@ import Diagrams.Backend.Rasterific
 import Diagrams
 
 display :: [(Double, Double)] -> Diagram B
-display _ = circle 1
+display = pad 1.1 . centerXY . fromVertices . map p2
