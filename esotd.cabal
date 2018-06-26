@@ -23,7 +23,7 @@ source-repository head
   type:     git
   location: https://github.com/mihaimaruseac/eotd
 
-library
+library esotd-lib
   default-language:  Haskell2010
   ghc-options:       -Wall -Werror -O2
   hs-source-dirs:    src
@@ -40,7 +40,7 @@ executable esotd
   build-depends:     base >= 4.8 && < 5
                    , diagrams-lib
                    , diagrams-rasterific
-                   , esotd
+                   , esotd-lib
                    , optparse-applicative
 
 test-suite doctest
@@ -53,4 +53,4 @@ test-suite doctest
                    , Glob
                    , QuickCheck
                    , doctest
-                   , esotd
+                   , esotd-lib
