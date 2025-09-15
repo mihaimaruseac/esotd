@@ -12,8 +12,10 @@ copyright: © 2018 Mihai Maruseac
 category: Math, Images
 build-type: Simple
 stability: alpha (experimental)
-extra-doc-files: README.md, CHANGELOG.md
 bug-reports: https://github.com/mihaimaruseac/eotd/issues
+
+extra-doc-files:
+  README.md
 
 extra-source-files:
   README.md
