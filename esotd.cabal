@@ -1,19 +1,19 @@
-name:                esotd
-version:             0.1.0.0
-synopsis:            Exponential sum of the day
-description:         Simple package to compute and plot the exponential sum
-                     given by the current day.
-license:             ISC
-license-file:        LICENSE
-author:              Mihai Maruseac
-maintainer:          mihai.maruseac@gmail.com
-copyright:           © 2018 Mihai Maruseac
-homepage:            https://github.com/mihaimaruseac/eotd
-bug-reports:         https://github.com/mihaimaruseac/eotd/issues
-category:            Math, Images
-build-type:          Simple
-stability:           alpha (experimental)
-cabal-version:       >=1.10
+cabal-version: 3.6
+name: esotd
+version: 0.1.0.0
+synopsis: Exponential sum of the day
+description: Simple package to compute and plot the exponential sum given by the current day.
+homepage: https://mihai.page  -- TODO: write article about the generator
+license: ISC
+license-file: LICENSE.md
+author: Mihai Maruseac
+maintainer: mihai.maruseac@gmail.com
+copyright: © 2018 Mihai Maruseac
+category: Math, Images
+build-type: Simple
+stability: alpha (experimental)
+extra-doc-files: README.md, CHANGELOG.md
+bug-reports: https://github.com/mihaimaruseac/eotd/issues
 
 extra-source-files:
   README.md
