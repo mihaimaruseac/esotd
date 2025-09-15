@@ -5,7 +5,7 @@ synopsis: Exponential sum of the day
 description: Simple package to compute and plot the exponential sum given by the current day.
 homepage: https://mihai.page  -- TODO: write article about the generator
 license: ISC
-license-file: LICENSE.md
+license-file: LICENSE
 author: Mihai Maruseac
 maintainer: mihai.maruseac@gmail.com
 copyright: © 2018 Mihai Maruseac
