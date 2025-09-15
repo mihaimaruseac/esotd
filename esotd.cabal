@@ -38,10 +38,10 @@ executable esotd
   other-modules:     Args
                    , Plot
   build-depends:     base >= 4.8 && < 5
-                   , diagrams-lib
-                   , diagrams-rasterific
+                   , diagrams-lib ^>= 1.5
+                   , diagrams-rasterific ^>= 1.5
                    , esotd-lib
-                   , optparse-applicative
+                   , optparse-applicative ^>= 0.19
 
 test-suite doctest
   type:              exitcode-stdio-1.0
@@ -50,7 +50,7 @@ test-suite doctest
   hs-source-dirs:    test/doctest
   main-is:           Main.hs
   build-depends:     base >= 4.8 && < 5
-                   , Glob
-                   , QuickCheck
-                   , doctest
+                   , Glob ^>= 0.10.2
+                   , QuickCheck ^>= 2.17.1
+                   , doctest ^>= 0.24.2
                    , esotd-lib
