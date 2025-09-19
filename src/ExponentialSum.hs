@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 {-|
 Module      : ExponentialSum
 Description : Compute the exponential sum of the day
