@@ -1,0 +1,64 @@
+name: Haskell Stack
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+permissions: {}
+
+jobs:
+  test:
+    name: CI
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false # don't cancel other jobs if one fails
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        # We don't split on multiple resolvers as the ~/.stack grows to ~700MB
+        # whereas all others (including Cabal ones) barely reach 50MB. Instead,
+        # we only use nightly as the resolver, as this should handle the newest
+        # GHC and is also the place where failures will be reported from Stack.
+        resolver: [nightly]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Haskell Compiler (stack)
+        id: setup-haskell
+        uses: haskell-actions/setup@82e8b5066385702e477d9dc98f287070493e8abd # v2.8.2
+        with:
+          enable-stack: true
+          stack-no-global: true
+
+      - name: Cache .stack-work
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: .stack-work
+          key: stack-work-${{ matrix.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}-${{ hashFiles('src/**','exe/**','test/**') }}
+          restore-keys: |
+            stack-work-${{ matrix.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}-
+            stack-work-${{ matrix.os }}-${{ matrix.resolver }}-
+
+      - name: Cache ~/.stack
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ${{ steps.setup-haskell.outputs.stack-root }}
+          key: stack-root-${{ matrix.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml', '**/*.cabal') }}
+          restore-keys: stack-root-${{ matrix.os }}-${{ matrix.resolver }}-
+
+      - name: Get dependencies
+        run: stack build --resolver=${{ matrix.resolver }} --only-dependencies --test --bench --no-run-tests --no-run-benchmarks
+
+      - name: Build code
+        run: stack build --resolver=${{ matrix.resolver }} --test --bench --no-run-tests --no-run-benchmarks
+
+      - name: Test code
+        run: stack test --resolver=${{ matrix.resolver }}
+
+      - name: Generate documentation
+        run: stack haddock --resolver=${{ matrix.resolver }}
