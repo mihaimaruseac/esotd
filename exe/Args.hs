@@ -12,17 +12,14 @@ module Args
   , Args(..)
   ) where
 
-import Diagrams.Backend.CmdLine
-  (DiagramOpts, DiagramLoopOpts, diagramOpts, diagramLoopOpts)
+import Diagrams.Backend.CmdLine (DiagramOpts, diagramOpts)
 import Options.Applicative
 
-type DO = (DiagramOpts, DiagramLoopOpts)
-
 data Args = Args
-  { coeffs  :: [Int] -- ^ coefficients to generate the sum
-  , start   :: Int   -- ^ from where to start the sum
-  , end     :: Int   -- ^ where to end the summation
-  , options :: DO    -- ^ options related to the output file
+  { coeffs  :: [Int]       -- ^ coefficients to generate the sum
+  , start   :: Int         -- ^ from where to start the sum
+  , end     :: Int         -- ^ where to end the summation
+  , options :: DiagramOpts -- ^ options related to the output file
   }
 
 parseArgs :: IO Args
@@ -41,8 +38,8 @@ parseArgsInternal = Args
   <*> parseEnd
   <*> parseDiagramOptions
 
-parseDiagramOptions :: Parser DO
-parseDiagramOptions = (,) <$> diagramOpts <*> diagramLoopOpts
+parseDiagramOptions :: Parser DiagramOpts
+parseDiagramOptions = diagramOpts
 
 parseCoefs :: Parser [Int]
 parseCoefs = many $ argument auto $ mconcat
