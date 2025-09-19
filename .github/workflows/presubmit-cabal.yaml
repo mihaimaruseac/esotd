@@ -1,0 +1,64 @@
+name: Haskell Cabal
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+permissions: {}
+
+jobs:
+  test:
+    name: CI
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false # don't cancel other jobs if one fails
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        ghc: [9.6.7, 9.8.4, 9.10.2, 9.12.2]
+    defaults:
+      run:
+        # The default shell on Windows is `pwsh`. However, it doesn't expand
+        # asterisks. That's why we always use `bash`.
+        shell: bash
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Haskell Compiler (cabal)
+        id: setup-haskell
+        uses: haskell-actions/setup@82e8b5066385702e477d9dc98f287070493e8abd # v2.8.2
+        with:
+          ghc-version: ${{ matrix.ghc }}
+
+      - name: Cache dist-newstyle
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: dist-newstyle
+          key: dist-newstyle-${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src/**','exe/**','test/**') }}
+          restore-keys: |
+            dist-newstyle-${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal') }}-
+            dist-newstyle-${{ matrix.os }}-${{ matrix.ghc }}-
+
+      - name: Cache ~/.cabal/store
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ${{ steps.setup-haskell.outputs.cabal-store }}
+          key: cabal-store-${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal') }}
+          restore-keys: cabal-store-${{ matrix.os }}-${{ matrix.ghc }}-
+
+      - name: Configure to run tests and benchmarks
+        run: cabal configure --enable-tests --enable-benchmarks
+
+      - name: Build code
+        run: cabal build
+
+      - name: Test code
+        run: cabal test
+
+      - name: Generate documentation
+        run: cabal haddock all
