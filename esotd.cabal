@@ -25,21 +25,18 @@ source-repository head
   type:     git
   location: https://github.com/mihaimaruseac/eotd
 
-common compile-options
-  ghc-options: -O2 -threaded -Wall -Wcompat
-
 library esotd-lib
-  import: compile-options
   hs-source-dirs: src
   default-language: Haskell2010
+  ghc-options: -Wall -Wcompat -O2 -threaded
   exposed-modules: ExponentialSum
   build-depends: base >= 4.8 && < 5
 
 executable esotd
-  import: compile-options
   hs-source-dirs: exe
   main-is: Main.hs
   default-language: Haskell2010
+  ghc-options: -Wall -Wcompat -O2 -threaded -rtsopts -with-rtsopts=-N
   other-modules:
     , Args
     , Plot
@@ -51,9 +48,9 @@ executable esotd
     , optparse-applicative ^>= 0.19
 
 test-suite doctest
-  import: compile-options
   type: exitcode-stdio-1.0
   default-language: Haskell2010
+  ghc-options: -Wall -Wcompat -O2 -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs: test/doctest
   main-is: Main.hs
   build-depends:
