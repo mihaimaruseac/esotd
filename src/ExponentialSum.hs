@@ -1,4 +1,3 @@
-{-# LANGUAGE TemplateHaskell #-}
 {-|
 Module      : ExponentialSum
 Description : Compute the exponential sum of the day
@@ -32,7 +31,9 @@ import Data.Complex
 --
 -- 1. If the coefficients are missing, we want to return a 0 for any index:
 --
---     prop> realArg [] x == 0
+-- >>> :{
+-- import Test.Quickcheck
+-- quickCheck $ \x -> realArg [] x == 0
 --
 -- 2. If the index is 0, we output 0 regardless of the coefficients, provided
 -- at least one is non-zero
