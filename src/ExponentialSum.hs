@@ -26,27 +26,6 @@ import Data.Complex
 -- 2.063379583746283
 -- >>> realArg [12, 5, 18] 3
 -- 3.55
---
--- There are some properties which might be useful:
---
--- 1. If the coefficients are missing, we want to return a 0 for any index:
---
--- >>> :{
--- import Test.QuickCheck
--- quickCheck $ \x -> realArg [] x == 0
--- :}
---
--- 2. If the index is 0, we output 0 regardless of the coefficients, provided
--- at least one is non-zero
---
--- >>> :{
--- import Test.QuickCheck
--- quickCheck $ \a -> a == 0 || realArg (a:xs) 0 == 0
--- :}
---
--- There might be a few more properties but we can ignore them for now, as
--- some might fail due to numerical inaccuracies. We are also sidestepping
--- NaNs and infinities at the moment.
 realArg :: [Double] -> Double -> Double
 realArg xs n = sum $ zipWith power xs [1..]
   where
@@ -63,14 +42,6 @@ realArg xs n = sum $ zipWith power xs [1..]
 -- 0.9217505006686714 :+ 0.3877834634393964
 -- >>> expVal [12, 5, 18] 3
 -- (-0.9510565162951544) :+ (-0.3090169943749449)
---
--- Also, we have the following properties:
---
--- >>> :{
--- import Test.QuickCheck
--- quickCheck $ \x -> x == 0 || expVal [] x == 1
--- quickCheck $ \x -> a >= 0 || expVal (a:xs) 0 == 1
--- :}
 expVal :: [Double] -> Double -> Complex Double
 expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
 
