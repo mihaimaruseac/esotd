@@ -11,9 +11,10 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         haskellPackages = pkgs.haskellPackages;
+        esotd = haskellPackages.callCabal2nix "esotd" self { };
       in
       {
-        packages.esotd = haskellPackages.callCabal2nix "esotd" self { };
+        packages.esotd = esotd;
 
         defaultPackage = self.packages.${system}.esotd;
 
@@ -23,6 +24,14 @@
         };
 
         defaultApp = self.apps.${system}.esotd;
+
+        devShells.default = haskellPackages.shellFor {
+          packages = p: [ esotd ];
+          buildInputs = [
+            pkgs.cabal-install
+            pkgs.doctest
+          ];
+        };
 
         checks.default = self.packages.${system}.esotd;
       });
