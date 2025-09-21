@@ -34,9 +34,9 @@ import Data.Complex
 --     prop> realArg [] x == 0
 --
 -- 2. If the index is 0, we output 0 regardless of the coefficients, provided
--- at least one is non-zero
+-- at neither is 0
 --
---     prop> a == 0 || realArg (a:xs) 0 == 0
+--     prop> any (== 0) xs || realArg xs 0 == 0
 --
 -- There might be a few more properties but we can ignore them for now, as
 -- some might fail due to numerical inaccuracies. We are also sidestepping
