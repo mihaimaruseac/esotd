@@ -25,12 +25,17 @@
 
         defaultApp = self.apps.${system}.esotd;
 
-        devShells.default = haskellPackages.shellFor {
-          packages = p: [ esotd ];
-          buildInputs = [
-            pkgs.cabal-install
-            pkgs.doctest
-          ];
+        devShells = {
+          default = haskellPackages.shellFor {
+            packages = p: [ esotd ];
+            buildInputs = [
+              pkgs.cabal-install
+              pkgs.doctest
+              pkgs.diagrams
+              pkgs.diagrams-rasterific
+              pkgs.palette
+            ];
+          };
         };
 
         checks.default = self.packages.${system}.esotd;
