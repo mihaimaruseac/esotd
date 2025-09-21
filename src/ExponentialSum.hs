@@ -61,7 +61,7 @@ realArg xs n = sum $ zipWith power xs [1..]
 -- Also, we have the following properties:
 --
 -- prop> x == 0 || expVal [] x == 1
--- prop> a >= 0 || expVal (a:xs) 0 == 1
+-- prop> a >= 0 || any (== 0) xs || expVal (a:xs) 0 == 1
 expVal :: [Double] -> Double -> Complex Double
 expVal xs n = exp $ 2 * pi * (0 :+ realArg xs n)
 
