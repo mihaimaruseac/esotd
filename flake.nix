@@ -21,42 +21,18 @@
         defaultPackage = self.packages.${system}.${packageName};
 
         devShell = pkgs.mkShell {
-          buildInputs = with haskellPackages; [
-            cabal-install
-            diagrams
-            diagrams-lib
-            diagrams-rasterific
-            palette
+          buildInputs = [
+            pkgs.cabal-install
+            pkgs.zlib.dev
+            pkgs.haskellPackages.diagrams
+            pkgs.haskellPackages.diagrams-rasterific
+            pkgs.haskellPackages.palette
           ];
           inputsFrom = builtins.attrValues self.packages.${system};
+
+          shellHook = ''
+            export PS1="[\[\033[01;32m\]nix-shell\[\033[00m\]:\W] \[\033[01;32m\]λ\[\033[00m\] "
+          '';
         };
-
-        #apps.esotd = {
-        #  type = "app";
-        #  program = "${self.packages.${system}.esotd}/bin/esotd";
-        #};
-
-        #defaultApp = self.apps.${system}.esotd;
-
-        #devShells = {
-        #  default = haskellPackages.shellFor {
-        #    packages = p: [
-        #      esotd
-        #      pkgs.doctest
-        #      pkgs.haskellPackages.diagrams
-        #      pkgs.haskellPackages.diagrams-rasterific
-        #      pkgs.haskellPackages.palette
-        #    ];
-        #    buildInputs = [
-        #      pkgs.cabal-install
-        #      pkgs.doctest
-        #      pkgs.haskellPackages.diagrams
-        #      pkgs.haskellPackages.diagrams-rasterific
-        #      pkgs.haskellPackages.palette
-        #    ];
-        #  };
-        #};
-
-        #checks.default = self.packages.${system}.esotd;
       });
 }
