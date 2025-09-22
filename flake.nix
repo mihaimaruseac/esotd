@@ -11,33 +11,52 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         haskellPackages = pkgs.haskellPackages;
-        esotd = haskellPackages.callCabal2nix "esotd" self { };
+        packageName = "esotd";
       in
       {
-        packages.esotd = esotd;
-
-        defaultPackage = self.packages.${system}.esotd;
-
-        apps.esotd = {
-          type = "app";
-          program = "${self.packages.${system}.esotd}/bin/esotd";
+        packages.${packageName} = haskellPackages.callCabal2nix packageName self rec {
+          # Dependency overrides
         };
 
-        defaultApp = self.apps.${system}.esotd;
+        defaultPackage = self.packages.${system}.${packageName};
 
-        devShells = {
-          default = haskellPackages.shellFor {
-            packages = p: [ esotd ];
-            buildInputs = [
-              pkgs.cabal-install
-              pkgs.doctest
-              pkgs.diagrams
-              pkgs.diagrams-rasterific
-              pkgs.palette
-            ];
-          };
+        devShell = pkgs.mkShell {
+          buildInputs = with haskellPackages; [
+            cabal-install
+            diagrams
+            diagrams-lib
+            diagrams-rasterific
+            palette
+          ];
+          inputsFrom = builtins.attrValues self.packages.${system};
         };
 
-        checks.default = self.packages.${system}.esotd;
+        #apps.esotd = {
+        #  type = "app";
+        #  program = "${self.packages.${system}.esotd}/bin/esotd";
+        #};
+
+        #defaultApp = self.apps.${system}.esotd;
+
+        #devShells = {
+        #  default = haskellPackages.shellFor {
+        #    packages = p: [
+        #      esotd
+        #      pkgs.doctest
+        #      pkgs.haskellPackages.diagrams
+        #      pkgs.haskellPackages.diagrams-rasterific
+        #      pkgs.haskellPackages.palette
+        #    ];
+        #    buildInputs = [
+        #      pkgs.cabal-install
+        #      pkgs.doctest
+        #      pkgs.haskellPackages.diagrams
+        #      pkgs.haskellPackages.diagrams-rasterific
+        #      pkgs.haskellPackages.palette
+        #    ];
+        #  };
+        #};
+
+        #checks.default = self.packages.${system}.esotd;
       });
 }
